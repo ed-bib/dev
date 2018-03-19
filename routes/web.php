@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::resource('shops', 'ShopsController');
+
+Route::get('shops/{id}/delete', 'ShopsController@destroy');
+
+Route::get('errors', function() {
+    return view('errors/print');
+});

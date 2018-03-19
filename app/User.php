@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -26,4 +27,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    /**
+     * Связь моделей User и Shop, один ко многим
+     * 
+     * @return
+     */
+    public function shops()
+    {
+        return $this->hasMany('App\Shop');
+    }
+    
+    /**
+     * Проверка прав на запись/изменение/удаление
+     * 
+     * @return
+     */
+    public function isAdmin()
+    {
+        if ($user = Auth::user()) {
+            return $user->id == 1;
+        }
+        
+        return false;
+    }
 }
